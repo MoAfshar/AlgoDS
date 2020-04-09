@@ -41,4 +41,8 @@ class Solution:
         
         return dp[n]
             
-        
+    #---For refrence a brute force approach can also be done which would take O(2^n)---#
+    # if n == 0 or n == 1 or n == 2 or n == 3: 
+    #   return n 
+    # else: 
+    #   return self.climbStairs(n-1) + self.climbStairs(n-2)
