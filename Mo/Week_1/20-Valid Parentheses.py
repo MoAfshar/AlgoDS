@@ -16,9 +16,9 @@ Example 2:
     Output: true   
 """
 
-# Time complexity : O(n) because we simply traverse the given string one 
-# character at a time and push and pop operations on a stack take O(1) time.
-# Space complexity : O(n) as we push all opening brackets onto the stack and 
+# Time complexity : O(n)O(n) because we simply traverse the given string one 
+# character at a time and push and pop operations on a stack take O(1)O(1) time.
+# Space complexity : O(n)O(n) as we push all opening brackets onto the stack and 
 # in the worst case, we will end up pushing all the brackets onto the stack.
 
 class Solution:
@@ -32,14 +32,12 @@ class Solution:
         for bracket in s:
             if bracket not in bracket_mapping:
                 stack.append(bracket)
-            elif bracket_mapping[bracket] in stack: 
+            elif stack and bracket_mapping[bracket] in stack[-1]: 
                 stack.pop()
             else: 
                 return False
         
         # If the stack is empty we have closed all brackets correctly 
-        if not stack: 
-            return True 
         # If the stack is not empty after finishing, the brackets did not 
         # close in the correct order
-        return False
+        return not stack
