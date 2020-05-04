@@ -17,13 +17,13 @@ Example:
 """
 # When thinking about the problem it is important to think about whether there are going to be any duplicates
 # whether there all numbers are unique or not etc to scope out the problem for ourselves
-# O(n^2) time complexity
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]: 
         result = []
         nums.sort() # Sorts in place
         target = 0
         for i in range(0, len(nums)-2):
+            # for the case where all numbers are all the same in the list e.g [0, 0, 0]
             if i == 0 or nums[i] != nums[i-1]:
                 start = i + 1
                 end = len(nums) - 1
@@ -33,12 +33,14 @@ class Solution:
                     if nums[i] + nums[start] + nums[end] < target: 
                         # Increment the left pointer and avoid duplication with the while loop
                         # If the next element is the same as our current increase pointer again
+                        # Always executes at least once
                         current_start = start
                         while nums[current_start] == nums[start] and start < end: 
                             start += 1
                     else: 
-                        # Increment the left pointer and avoid duplication with the while loop
+                        # Increment the right pointer and avoid duplication with the while loop
                         # If the next element is the same as our current increase pointer again
+                        # Always executes at least once
                         current_end = end
                         while nums[current_end] == nums[end] and start < end: 
                             end -= 1
