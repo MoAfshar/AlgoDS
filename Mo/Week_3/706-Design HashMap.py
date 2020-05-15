@@ -29,7 +29,7 @@ class MyHashMap:
         """
         Initialize your data structure here.
         """
-        self.size = 100000
+        self.size = 15000
         self.bucket = [None] * self.size
 
     def put(self, key: int, value: int) -> None:
@@ -37,32 +37,58 @@ class MyHashMap:
         value will always be non-negative.
         """
         idx = key % self.size
-        if self.bucket[idx] == None: 
-            key = ListNode(key)
-            key.next = ListNode(value)
-            self.bucket[idx] = key
+        if self.bucket[idx] is None: 
+            curr = ListNode([key, value])
+            self.bucket[idx] = curr
         else: 
             curr = self.bucket[idx]
-            curr.next = ListNode(value)
-            self.bucket[idx] = curr
+            prev = None
+            while curr is not None: 
+                if curr.val[0] == key: 
+                    curr.val[1] = value
+                    break 
+                prev = curr
+                curr = curr.next
+                
+            if curr is None: 
+                prev.next = ListNode([key, value])
 
     def get(self, key: int) -> int:
         """
         Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
         """
         idx = key % self.size
-        if self.bucket[idx] != None: 
-            value = self.bucket[idx].next.val
-            return value
+        curr = self.bucket[idx]
+        while curr is not None: 
+            if curr.val[0] == key: 
+                value = curr.val[1]
+                return value
+            curr = curr.next
         return -1
 
     def remove(self, key: int) -> None:
         """
         Removes the mapping of the specified value key if this map contains a mapping for the key
         """
-        idx = key % self.size 
-        self.bucket[idx] = None
-
+        idx = key % self.size
+        curr = self.bucket[idx] # bucket[idx] is the head
+        # If it's the head
+        if curr and curr.val[0] == key:
+            self.bucket[idx] = curr.next
+            curr = None
+            return
+        
+        prev = None
+        while curr and curr.val[0] != key: 
+            prev = curr
+            curr = curr.next
+        # If current is None that means no node has the key needed
+        if curr is None: 
+            return
+        
+        prev.next = curr.next
+        curr = None
+                
 # Your MyHashMap object will be instantiated and called as such:
 # obj = MyHashMap()
 # obj.put(key,value)
