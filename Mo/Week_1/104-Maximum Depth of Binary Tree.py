@@ -30,9 +30,24 @@ class TreeNode:
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
         if root is None: 
-            return 0 
+            return 0
         
+        deq = deque([root])
+        depth = 0
+        while deq: 
+            depth += 1
+            for i in range(len(deq)): 
+                current = deq.popleft()
+                if current.left: 
+                    deq.append(current.left)
+                if current.right: 
+                    deq.append(current.right)
+                    
+        return depth
+    
+    def maxDepth1(self, root: TreeNode) -> int: 
+        if root is None: 
+            return 0
         left = self.maxDepth(root.left)
         right = self.maxDepth(root.right)
-        print("LEFT:{}, RIGHT:{}".format(left,right))
         return max(left, right) + 1
