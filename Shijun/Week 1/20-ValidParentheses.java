@@ -19,5 +19,6 @@ class Solution {
             }
         }
         return stack.isEmpty();
+        //The end goal is to check whether the stack is empty because all the values should be popped out
     }
 }
